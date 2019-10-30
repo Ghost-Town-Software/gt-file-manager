@@ -25,23 +25,23 @@ class GtFile {
     let contents = {
       content: null,
       contentType: null,
-      encoding: null
+      encoding: 'UTF-8'
     };
     let contentType = mime.contentType(path.extname(this.path)).split('; ');
     contents.contentType = contentType[0];
+
     switch(contents.contentType) {
       case 'text/plain':
+      case 'text/html':
         contents.encoding = contentType[1].replace('charset=', '');
         contents.content = fs.readFileSync(path.join(config.basePath, this.path)).toString(contents.encoding);
         break;
-      case 'image/png':
-      case 'image/jpg':
-      case 'image/jpeg':
+      default:
          contents.content = fs.readFileSync(path.join(config.basePath, this.path)).toString('binary');
         break;
-      default:
-        console.error('Unsupported content type', contentType);
     }
+
+    console.log(contents);
 
     return contents;
   }

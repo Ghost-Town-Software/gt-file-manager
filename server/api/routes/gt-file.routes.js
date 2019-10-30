@@ -5,7 +5,6 @@ module.exports = function(app) {
   const gtFile = require('../controllers/gt-file.controller');
 
   app.route('/file/**')
-    .get(gtFile.getFile)
     .delete(gtFile.deleteFile);
 
   app.route('/stat/**')
