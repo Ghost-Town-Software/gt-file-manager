@@ -1,10 +1,64 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import 'assets/scss/variables';
+@import '~bootstrap/scss/card';
+@import '~bootstrap/scss/forms';
+@import '~bootstrap/scss/buttons';
 
-.grid-content {
-  table {
-    table-layout: fixed ;
-    width: 100%;
-  }
+
+body {
+  font-family: 'Lato', sans-serif;
 }
 
+.card-file-manager {
+  .card-body {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+  }
+
+  .card-files {
+    flex-grow: 3;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0.5rem;
+  }
+
+  .card-sidebar {
+    flex-grow: 1;
+    border-left: 1px solid $border-color;
+    padding: $card-spacer-y $card-spacer-x;
+  }
+
+  .card-action {
+    width: 100%;
+    padding: $card-spacer-y $card-spacer-x;
+    border-top: 1px solid $border-color;
+  }
+
+  .media {
+    width: calc(20% - 1rem);
+    padding: 0.5rem;
+
+    .media-inner {
+      position: relative;
+      width: 100%;
+      padding-bottom: 100%;
+      height: 0;
+      cursor: pointer;
+    }
+
+    .media-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      object-fit: cover;
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
