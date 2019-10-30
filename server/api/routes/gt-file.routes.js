@@ -14,6 +14,6 @@ module.exports = function(app) {
   app.route('/upload/**')
     .post(gtFile.uploadFile);
 
-  app.route('/ls/**')
+  app.route('/**')
     .get(gtFile.listDirectory);
 };

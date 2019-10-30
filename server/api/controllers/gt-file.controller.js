@@ -19,7 +19,7 @@ function extractPath(params) {
 exports.listDirectory = function(req, res) {
 
   let path = extractPath(req.params);
-  if(!fs.statSync(path).isDirectory()) {
+  if(!fs.existsSync(path) || !fs.statSync(path).isDirectory()) {
     res.status(404);
     res.json({ error: 'Directory ' + path + ' does not exist.'});
     return;
@@ -32,6 +32,7 @@ exports.listDirectory = function(req, res) {
 exports.getFile = function(req, res) {
   let gtFile = new GtFile(extractPath(req.params));
   gtFile.initStat();
+  gtFile.readContents();
   res.json(gtFile);
 };
 
