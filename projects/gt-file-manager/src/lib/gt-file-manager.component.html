@@ -1,1 +1,23 @@
-Hi from gt-file-manager component
+
+<div class="card card-file-manager">
+  <div class="card-header">
+    File Manager
+  </div>
+  <div class="card-body">
+    <div class="card-files">
+      <div class="media" *ngFor="let image of images | async">
+        <div class="media-inner" (click)="show(image)">
+          <img class="media-image" [src]="image" alt="">
+        </div>
+      </div>
+    </div>
+
+    <div class="card-sidebar">
+b
+    </div>
+
+    <div class="card-action">
+c
+    </div>
+  </div>
+</div>
