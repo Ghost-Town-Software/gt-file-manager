@@ -8,6 +8,9 @@ module.exports = function(app) {
     .get(gtFile.getFile)
     .delete(gtFile.deleteFile);
 
+  app.route('/stat/**')
+    .get(gtFile.statFile);
+
   app.route('/search/**')
     .get(gtFile.search);
 

@@ -9,7 +9,6 @@ class GtFile {
     this.directory = false;
     this.createdAt = null;
     this.modifiedAt = null;
-    this.content = null;
   }
 
   initStat() {
@@ -23,20 +22,28 @@ class GtFile {
   }
 
   readContents() {
+    let contents = {
+      content: null,
+      contentType: null,
+      encoding: null
+    };
     let contentType = mime.contentType(path.extname(this.path)).split('; ');
-    switch(contentType[0]) {
+    contents.contentType = contentType[0];
+    switch(contents.contentType) {
       case 'text/plain':
-        let encoding = contentType[1].replace('charset=', '');
-        this.content = fs.readFileSync(path.join(config.basePath, this.path)).toString(encoding);
+        contents.encoding = contentType[1].replace('charset=', '');
+        contents.content = fs.readFileSync(path.join(config.basePath, this.path)).toString(contents.encoding);
         break;
       case 'image/png':
       case 'image/jpg':
       case 'image/jpeg':
-        this.content = fs.readFileSync(path.join(config.basePath, this.path)).toString('binary');
+         contents.content = fs.readFileSync(path.join(config.basePath, this.path)).toString('binary');
         break;
       default:
         console.error('Unsupported content type', contentType);
     }
+
+    return contents;
   }
 }
 module.exports = GtFile;
