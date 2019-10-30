@@ -24,6 +24,10 @@ export class GtFileManagerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.service.list().subscribe(res => {
+      console.log('res', res);
+    })
+
     this.search$.pipe(
       debounceTime(300),
       switchMap(res => this.service.dummySearch(res)),
@@ -58,7 +62,7 @@ export class GtFileManagerComponent implements OnInit, OnDestroy {
         toArray(),
         takeUntil(this.destroy$)
       ).subscribe(res => {
-        this.images$.next(res);
+      this.images$.next(res);
     });
   }
 

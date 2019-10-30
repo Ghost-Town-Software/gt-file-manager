@@ -29,17 +29,6 @@ exports.listDirectory = function(req, res) {
   res.json(files);
 };
 
-exports.getFile = function(req, res) {
-  let gtFile = new GtFile(extractPath(req.params));
-  let contents = gtFile.readContents();
-
-  res.writeHead(200, {
-    'Content-Type': contents.contentType,
-    'Content-Length': contents.content.length
-  });
-  res.end(Buffer.from(contents.content, 'binary'));
-};
-
 exports.statFile = function(req, res) {
   let gtFile = new GtFile(extractPath(req.params));
   gtFile.initStat();

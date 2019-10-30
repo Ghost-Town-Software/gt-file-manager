@@ -4,6 +4,7 @@ const express = require('express'),
   port = process.env.PORT || 3000;
 
 app.use(cors());
+app.use(express.static(__dirname + '/../.filesystem/'));
 
 
 const routes = require('./api/routes/gt-file.routes');
