@@ -1,7 +1,10 @@
-
+const cors = require('cors');
 const express = require('express'),
   app = express(),
   port = process.env.PORT || 3000;
+
+app.use(cors());
+
 
 const routes = require('./api/routes/gt-file.routes');
 routes(app);
