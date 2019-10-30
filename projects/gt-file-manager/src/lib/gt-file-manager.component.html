@@ -1,13 +1,19 @@
 
 <div class="card card-file-manager">
   <div class="card-header">
-    File Manager
+    <div>
+      File Manager
+    </div>
+
+    <div class="search">
+      <input type="text" class="form-control" (input)="onInput($event)" placeholder="Search for file...">
+    </div>
   </div>
   <div class="card-body">
     <div class="card-files">
-      <div class="media" *ngFor="let image of images | async">
-        <div class="media-inner" (click)="show(image)">
-          <img class="media-image" [src]="image" alt="">
+      <div class="media" *ngFor="let file of files" [ngClass]="{'selected': file.selected}">
+        <div class="media-inner" (click)="show(file)">
+          <img class="media-image" [src]="file.model" alt="">
         </div>
       </div>
     </div>
