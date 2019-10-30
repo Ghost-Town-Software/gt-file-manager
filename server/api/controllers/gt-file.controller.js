@@ -3,8 +3,8 @@
 
 const fs = require('fs');
 const glob = require('glob');
-
-const basePath = fs.realpathSync('../.filesystem');
+const GtFile = require('../models/gt-file');
+const config = require('../config/variables');
 
 function extractPath(params) {
   if(params.length === 0) {
@@ -13,32 +13,26 @@ function extractPath(params) {
 
   let route = params[0].replace(/\.\./g, '');
 
-  return basePath + '/' + route;
-}
-
-function relativePath(path) {
-  if(path.constructor === Array) {
-    return path.map(relativePath);
-  }
-  return path.replace(basePath.replace(/\\/g, '/'), '');
+  return config.basePath + '/' + route;
 }
 
 exports.listDirectory = function(req, res) {
 
   let path = extractPath(req.params);
-  let stat = fs.statSync(path);
-  if(!stat.isDirectory()) {
+  if(!fs.statSync(path).isDirectory()) {
     res.status(404);
-    res.render('error', { error: 'Directory ' + path + ' does not exist.'});
+    res.json({ error: 'Directory ' + path + ' does not exist.'});
     return;
   }
 
-  res.json(relativePath(glob.sync(path + '/*')));
+  let files = glob.sync(path + '/*').map(file => new GtFile(file).initStat());
+  res.json(files);
 };
 
 exports.getFile = function(req, res) {
-  let stat = fs.statSync(extractPath(req.params));
-  res.json(stat);
+  let gtFile = new GtFile(extractPath(req.params));
+  gtFile.initStat();
+  res.json(gtFile);
 };
 
 exports.uploadFile = function(req, res) {
